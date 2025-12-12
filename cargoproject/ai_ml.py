@@ -22,7 +22,7 @@ def predict_capacity_ml(origin, destination, date_str=None, cargo_type="General"
     columns = md["columns"]
 
     # extract month from date if provided
-    month = 1
+    month = 10
     if date_str:
         try:
             month = int(date_str.split("-")[1])
@@ -43,3 +43,4 @@ def predict_capacity_ml(origin, destination, date_str=None, cargo_type="General"
     X = pd.DataFrame([row], columns=columns).fillna(0)
     pred = int(model.predict(X)[0])
     return {"predicted_capacity": pred, "route": f"{origin.upper()}->{destination.upper()}", "month":month}
+
