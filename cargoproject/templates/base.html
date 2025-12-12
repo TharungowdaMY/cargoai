@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargo AI Platform</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- 🌟 NAVIGATION BAR -->
+<nav class="main-nav">
+    <div class="logo">Cargo<span>AI</span></div>
+
+    <ul class="nav-links">
+
+        <li><a href="/">Home</a></li>
+        <li><a href="/interline">Interline Routes</a></li>
+
+        {% if session.get('user_id') %}
+
+            {% if session.get('role') == 'forwarder' %}
+                <li><a href="/forwarder_search">Forwarder Search</a></li>
+            {% endif %}
+
+            {% if session.get('role') == 'airline' %}
+                <li><a href="/upload">Upload Flight</a></li>
+                <li><a href="/upload_csv">Upload CSV Flights</a></li>
+                <li><a href="/big_feed">Big Airline Feed</a></li>
+                <li><a href="/airline_optimizer">Optimizer</a></li>
+            {% endif %}
+
+            <li><a href="/search">Search</a></li>
+            <li><a href="/bookings">Bookings</a></li>
+            <li><a href="/workspace">Workspace</a></li>
+            <li><a href="/logout">Logout ({{ session.get('role') }})</a></li>
+
+        {% else %}
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<!-- 🌟 HERO SECTION -->
+<header class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>Cargo AI — Seamless Air Cargo Forwarding</h1>
+        <p>Smart, Fast & Transparent Booking with Real-Time Airline Capacity</p>
+    </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<div class="page-container">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

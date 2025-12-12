@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="interline-container">
+
+    <div class="neon-box">
+        <h2 class="neon-title">Interline Routing</h2>
+
+        <form method="POST" class="search-form">
+            <label>Origin:</label>
+            <input name="origin" class="neon-input" required>
+
+            <label>Destination:</label>
+            <input name="destination" class="neon-input" required>
+
+            <label>Date:</label>
+            <input type="date" name="date" class="neon-input" required>
+
+            <button class="neon-button">Search</button>
+        </form><form method="POST" action="/book">
+    <input type="hidden" name="flight_id" value="{{ r.legs[0]['id'] }}">
+
+    <label>Actual Weight (kg):</label>
+    <input type="number" name="actual_weight" required min="1">
+
+    <label>Length (cm):</label>
+    <input type="number" name="length" required min="1">
+
+    <label>Width (cm):</label>
+    <input type="number" name="width" required min="1">
+
+    <label>Height (cm):</label>
+    <input type="number" name="height" required min="1">
+
+    <button type="submit" class="neon-btn">Hold</button>
+</form>
+
+    </div>
+
+    <div class="neon-box results-box">
+        <h3 class="neon-subtitle">Interline Options</h3>
+
+        {% if routes %}
+            {% for r in routes %}
+            <div class="route-card">
+
+                <div class="route-header">
+                    <span class="route-path">
+                      ✈ {{ r.legs[0]['origin'] }} → {{ r.legs[0]['destination'] }} → {{ r.legs[1]['destination'] }}
+                    </span>
+                </div>
+
+                <div class="route-details">
+                    <p><b>Leg 1:</b> {{ r.legs[0]['airline'] }} {{ r.legs[0]['flight_no'] }}</p>
+                    <p><b>Leg 2:</b> {{ r.legs[1]['airline'] }} {{ r.legs[1]['flight_no'] }}</p>
+                    <p><b>Capacity:</b> <span class="capacity-tag">{{ r.capacity }} kg</span></p>
+                </div>
+
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-results">No interline connections found.</p>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}
